@@ -53,6 +53,35 @@ function register() {
 }
 // Todos page logic
 function createTodoCard(todo) {
+    const card = document.createElement("div");
+    card.className = "todo-card";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = todo.isCompleted;
+    checkbox.addEventListener("change", function() {
+        const updatedTodo = {...todo, isCompleted: checkbox.checked};
+        updateTodoStatus(updatedTodo);
+    });
+
+    const span = document.createElement("span");
+    span.textContent = todo.title;
+
+    if (todo.isCompleted) {
+        span.style.textDecoration = "line-through";
+        span.style.color = "gray";
+    }
+    const deletebtn = document.createElement("button");
+    deletebtn.textContent = "x";
+    deletebtn.onclick = function() {
+        deleteTodo(todo.id);
+    }
+
+    card.appendChild(checkbox);
+    card.appendChild(span);
+    card.appendChild(deletebtn);
+
+    return card;
 
 }
 
@@ -69,7 +98,22 @@ function updateTodoStatus(todo) {
 }
 
 function deleteTodo(id) {
+     fetch(`${SERVER_URL}/api/todo/${id}`, {
+        method: "DELETE",
+        headers: {"Authorization": `Bearer ${token}`},
 
+
+    })
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(" failed to delete todo");
+        }
+        return response.text();
+    })
+    .then(() => loadTodos())
+    .catch(error => {
+        alert(error.message);
+    });
 }
 
 // Page-specific initializations
