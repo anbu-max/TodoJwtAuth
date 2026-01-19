@@ -86,11 +86,68 @@ function createTodoCard(todo) {
 }
 
 function loadTodos() {
+    if(!token) {
+        alert("Please log in first.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    fetch(`${SERVER_URL}/api/todo`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`},
+    })
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(" failed to get todo");
+        }
+        return response.json();
+    })
+    .then((todos) => {
+        const todoList = document.getElementById("todo-list");
+        todoList.innerHTML = "";
+
+        if(!todos || todos.length === 0) {
+            todoList.innerHTML = "<p>No todos found. Add a new todo!</p>";
+        }
+        else{
+            todos.forEach(todo => {
+                todoList.appendChild(createTodoCard(todo));
+            });
+        }
+
+    })
+    .catch(error => {
+        alert(error.message);
+        document.getElementById("todo-list").innerHTML = "<p>Error loading todos.</p>";
+    });
 
 }
 
 function addTodo() {
+    const input = document.getElementById("new-todo");
+    const title = input.value.trim();
 
+
+ fetch(`${SERVER_URL}/api/todo`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`},
+        body: JSON.stringify({title:todoText, isCompleted: false})
+    })
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(" failed to add todo");
+        }
+        return response.json();
+    })
+    .then((newTodo) => {
+        input.value = "";
+        loadTodos()
+    })
+    .catch(error => {
+        alert(error.message);
+    });
 }
 
 function updateTodoStatus(todo) {
@@ -102,7 +159,7 @@ function updateTodoStatus(todo) {
     })
     .then(response => {
         if(!response.ok) {
-            throw new Error(" failed to Upadate todo");
+            throw new Error(" failed to Up  date todo");
         }
         return response.text();
     })
