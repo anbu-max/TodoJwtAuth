@@ -94,7 +94,22 @@ function addTodo() {
 }
 
 function updateTodoStatus(todo) {
-
+ fetch(`${SERVER_URL}/api/todo`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`},
+        body: JSON.stringify(todo)
+    })
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(" failed to Upadate todo");
+        }
+        return response.text();
+    })
+    .then(() => loadTodos())
+    .catch(error => {
+        alert(error.message);
+    });
 }
 
 function deleteTodo(id) {
