@@ -434,7 +434,7 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 ## 👨‍💻 Author
 
 **Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
+- GitHub: [@anbu-max](https://github.com/yourusername)
 
 ## 🙏 Acknowledgments
 
