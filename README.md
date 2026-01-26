@@ -6,7 +6,6 @@
 ![JWT](https://img.shields.io/badge/Auth-JWT-blue.svg)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-12+-blue.svg)
 ![H2](https://img.shields.io/badge/H2-Dev%20DB-lightgrey.svg)
-![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)
 ![Maven](https://img.shields.io/badge/Maven-Build-red.svg)
 ![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-green.svg)
 ![License](https://img.shields.io/badge/License-MIT-black.svg)
